@@ -10,7 +10,6 @@ import RoiCalculator from '@/components/ui/RoiCalculator';
 
 // Lazy-load heavy 3D components
 const ShieldScene  = dynamic(() => import('@/components/3d/ShieldScene'),  { ssr: false });
-const NodeGraph    = dynamic(() => import('@/components/3d/NodeGraph'),    { ssr: false });
 const PricingOrbs  = dynamic(() => import('@/components/3d/PricingOrbs'),  { ssr: false });
 
 // ─── Terminal Lines ───────────────────────────────────────────────────────
@@ -277,56 +276,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── ARCHITECTURE FLYTHROUGH ───────────────────────────────────────── */}
-      <section className="section" id="architecture">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-          <div>
-            <span className="section-eyebrow">How It Works</span>
-            <h2 className="text-h1">Defense in Depth</h2>
-            <p className="text-lead" style={{ margin: '1rem 0 2rem' }}>
-              Six interlocking security layers — each with its own AI agent — create a fortress that
-              hardens itself every time an attacker probes it.
-            </p>
 
-            {[
-              { color: 'var(--neon-cyan)',    label: 'Pingora Proxy',   desc: 'L7 reverse proxy core — TLS, routing' },
-              { color: '#7c3aed',             label: 'WAF Core',        desc: '1,500+ patterns, ML anomaly detection' },
-              { color: 'var(--neon-crimson)', label: 'Tartarus Engine', desc: 'Honeypot deception, Mirror Dimension' },
-              { color: 'var(--neon-emerald)', label: 'Aegis Prime',     desc: 'Kernel eBPF/XDP packet filtering' },
-              { color: 'var(--neon-gold)',    label: 'Ghost Engine',    desc: 'Hot-reloadable Wasm plugin runtime' },
-              { color: '#a855f7',             label: 'Ouroboros AI',    desc: 'Self-evolution via shadow red-teaming' },
-            ].map((item, i) => (
-              <motion.div
-                key={item.label}
-                className="flex items-start gap-4 mb-4"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <div style={{
-                  width: 10, height: 10, borderRadius: '50%',
-                  background: item.color,
-                  boxShadow: `0 0 10px ${item.color}`,
-                  marginTop: 5, flexShrink: 0,
-                }} />
-                <div>
-                  <span style={{ color: item.color, fontWeight: 700, fontSize: '0.9rem' }}>{item.label}</span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginLeft: 8 }}>{item.desc}</span>
-                </div>
-              </motion.div>
-            ))}
-
-            <Link href="/features" className="btn btn-secondary mt-4">
-              View Full Architecture <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          <div style={{ height: '500px', position: 'relative' }}>
-            <NodeGraph />
-          </div>
-        </div>
-      </section>
 
       {/* ─── WAR GAME TERMINAL ─────────────────────────────────────────────── */}
       <section className="section" id="wargame">
@@ -370,14 +320,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── PRICING PREVIEW ───────────────────────────────────────────────── */}
+      {/* ─── ON-PREMISE SOVEREIGN PLANS ────────────────────────────────────── */}
       <section className="section" id="pricing">
         <div className="section-header">
-          <span className="section-eyebrow">Pricing</span>
-          <h2 className="text-h1">The 40% Rule</h2>
-          <p className="text-lead" style={{ maxWidth: 560, margin: '1rem auto 0' }}>
-            By filtering at the network card (not the cloud), we eliminate bandwidth costs —
-            and pass 100% of savings to you.
+          <span className="section-eyebrow">On-Premise Plans</span>
+          <h2 className="text-h1">Sovereign Deployment Plans</h2>
+          <p className="text-lead" style={{ maxWidth: 640, margin: '1rem auto 0' }}>
+            Zero data egress. Deploy Spryzen natively inside your VPC, bare-metal servers, or air-gapped data centers.
           </p>
         </div>
 
@@ -385,7 +334,7 @@ export default function HomePage() {
 
         <div className="flex justify-center mt-8">
           <Link href="/pricing" className="btn btn-secondary">
-            See Full Pricing & ROI Calculator <ArrowRight size={16} />
+            See Detailed Comparison & ROI Calculator <ArrowRight size={16} />
           </Link>
         </div>
       </section>
