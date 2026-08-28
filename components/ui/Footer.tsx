@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Shield, Github, Twitter, Linkedin, ExternalLink } from 'lucide-react';
 
