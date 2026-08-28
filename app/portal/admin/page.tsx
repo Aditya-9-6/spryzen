@@ -690,6 +690,10 @@ export default function AdminPortal() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
       {/* ENTERPRISE LICENSING TAB */}
       {activeTab === 'licensing' && (
         <div className="space-y-8 animate-fadeIn">
