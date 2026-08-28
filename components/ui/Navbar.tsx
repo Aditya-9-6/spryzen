@@ -7,11 +7,10 @@ import { Shield, Bell, Menu, X, ChevronRight, Zap } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 
 const navLinks = [
-  { label: 'Technology', href: '/features' },
   { label: 'Live Demo', href: '/#playground' },
+  { label: 'On-Premise Plans', href: '/pricing' },
   { label: 'Customers', href: '/customers' },
   { label: 'Docs', href: '/docs' },
-  { label: 'Pricing & ROI', href: '/pricing' },
   { label: 'Log Inspector', href: '/analyzer' },
   { label: 'War Game', href: '/wargame' },
 ];
