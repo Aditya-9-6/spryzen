@@ -7,12 +7,12 @@ import { Shield, Bell, Menu, X, ChevronRight, Zap } from 'lucide-react';
 
 const navLinks = [
   { label: 'Technology', href: '/features' },
+  { label: 'Live Demo', href: '/#playground' },
+  { label: 'Customers', href: '/customers' },
+  { label: 'Docs', href: '/docs' },
+  { label: 'Pricing & ROI', href: '/pricing' },
   { label: 'Log Inspector', href: '/analyzer' },
-  { label: 'Live War Room', href: '/portal/war-room' },
-  { label: 'Developer Docs', href: '/docs' },
-  { label: 'Pricing',    href: '/pricing' },
-  { label: 'War Game',  href: '/wargame' },
-  { label: 'Contact',   href: '/contact' },
+  { label: 'War Game', href: '/wargame' },
 ];
 
 export default function Navbar() {
