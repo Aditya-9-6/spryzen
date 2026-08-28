@@ -524,6 +524,9 @@ export default function PricingPage() {
               </motion.div>
             );
           })}
+        </div>
+      </section>
+
       {/* ─── MODULAR PAY-AS-YOU-GO ADD-ONS ─── */}
       <section style={{ padding: '0 1.5rem 5rem', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ marginBottom: 28, textAlign: 'center' }}>
