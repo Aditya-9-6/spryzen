@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Bell, Menu, X, ChevronRight, Zap } from 'lucide-react';
+import Logo from '@/components/ui/Logo';
 
 const navLinks = [
   { label: 'Technology', href: '/features' },
@@ -40,28 +41,8 @@ export default function Navbar() {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 flex-shrink-0" aria-label="Spryzen+ Home">
-          <div className="relative">
-            <Shield
-              size={32}
-              className="text-[var(--neon-cyan)]"
-              strokeWidth={1.5}
-            />
-            <div
-              className="absolute inset-0 blur-[8px] opacity-60"
-              style={{ background: 'var(--neon-cyan)' }}
-            />
-          </div>
-          <span
-            className="font-display font-black text-xl tracking-tight"
-            style={{
-              background: 'linear-gradient(135deg, var(--neon-cyan), #a855f7)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            SPRYZEN<span className="text-[var(--neon-cyan)]">+</span>
-          </span>
+        <Link href="/" aria-label="Spryzen+ Home">
+          <Logo size="md" />
         </Link>
 
         {/* Desktop Nav Links */}
