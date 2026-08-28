@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Zap, Shield, ChevronRight, ArrowRight, Star, Terminal, Globe2, Brain, Lock } from 'lucide-react';
 import StatsCounter from '@/components/ui/StatsCounter';
+import LivePlayground from '@/components/ui/LivePlayground';
+import RoiCalculator from '@/components/ui/RoiCalculator';
 
 // Lazy-load heavy 3D components
 const ShieldScene  = dynamic(() => import('@/components/3d/ShieldScene'),  { ssr: false });
@@ -205,6 +207,23 @@ export default function HomePage() {
       {/* ─── STATS ─────────────────────────────────────────────────────────── */}
       <section className="section">
         <StatsCounter />
+      </section>
+
+      {/* ─── LIVE INTERACTIVE ATTACK PLAYGROUND ─────────────────────────────── */}
+      <section className="section" id="playground" style={{ paddingTop: '2rem', paddingBottom: '3rem' }}>
+        <div className="section-header" style={{ marginBottom: '2.5rem' }}>
+          <span className="section-eyebrow">Interactive Attack Simulator</span>
+          <h2 className="text-h1">Test Spryzen's Defense Shield Live</h2>
+          <p className="text-lead" style={{ maxWidth: 640, margin: '1rem auto 0' }}>
+            Simulate prompt injections, PII extraction, and SQLi attacks in real-time. See sub-8ms interception with formal mathematical proofs.
+          </p>
+        </div>
+        <LivePlayground />
+      </section>
+
+      {/* ─── ENTERPRISE ROI & LATENCY CALCULATOR ────────────────────────────── */}
+      <section className="section" id="roi" style={{ paddingTop: '1rem', paddingBottom: '3rem' }}>
+        <RoiCalculator />
       </section>
 
       {/* ─── FEATURES ──────────────────────────────────────────────────────── */}
