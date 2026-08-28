@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Zap, CheckCircle2, AlertTriangle, Cpu, Lock, Sparkles, RefreshCw, Copy, Check } from 'lucide-react';
+import { Zap, CheckCircle2, AlertTriangle, Cpu, Lock, Sparkles, RefreshCw, Copy, Check, ArrowRight } from 'lucide-react';
+import Logo from '@/components/ui/Logo';
+import Link from 'next/link';
 
 interface PresetAttack {
   id: string;
@@ -90,7 +92,7 @@ export default function LivePlayground() {
     setSelectedAttack(preset);
     setCustomPrompt('');
     setIsScanning(true);
-    setTimeout(() => setIsScanning(false), 350);
+    setTimeout(() => setIsScanning(false), 300);
   };
 
   const handleTestCustom = () => {
@@ -98,7 +100,7 @@ export default function LivePlayground() {
     setIsScanning(true);
     setTimeout(() => {
       setIsScanning(false);
-    }, 450);
+    }, 400);
   };
 
   const handleCopy = () => {
@@ -108,181 +110,329 @@ export default function LivePlayground() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-card)] overflow-hidden shadow-2xl backdrop-blur-xl">
-      {/* Header Bar */}
-      <div className="p-6 border-b border-[var(--glass-border)] bg-[var(--bg-elevated)] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-lg bg-[var(--neon-cyan-dim)] text-[var(--neon-cyan)] border border-[var(--neon-cyan-glow)]">
-              <Shield size={20} />
-            </span>
-            <div>
-              <h3 className="text-xl font-black font-outfit uppercase tracking-tight text-[var(--text-primary)]">
-                Live Attack Neutralizer Playground
+    <div
+      style={{
+        width: '100%',
+        maxWidth: '1100px',
+        margin: '0 auto',
+        borderRadius: '16px',
+        border: '1px solid var(--glass-border)',
+        background: 'var(--bg-card)',
+        overflow: 'hidden',
+        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 255, 0.05)',
+      }}
+    >
+      {/* ─── Header Bar ─── */}
+      <div
+        style={{
+          padding: '1.25rem 1.75rem',
+          borderBottom: '1px solid var(--glass-border)',
+          background: 'var(--bg-elevated)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <Logo size="sm" withText={false} />
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: 900, fontFamily: 'Outfit, sans-serif', color: 'var(--text-primary)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                Live Attack Neutralizer
               </h3>
-              <p className="text-xs text-[var(--text-secondary)] font-mono mt-0.5">
-                Real-time sub-8ms interception & formal verification engine
-              </p>
+              <span style={{ fontSize: '0.65rem', fontFamily: 'JetBrains Mono, monospace', background: 'var(--neon-cyan-dim)', color: 'var(--neon-cyan)', border: '1px solid var(--neon-cyan-glow)', padding: '2px 8px', borderRadius: '12px', fontWeight: 700 }}>
+                SUB-8MS
+              </span>
             </div>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'JetBrains Mono, monospace', margin: '2px 0 0 0' }}>
+              Real-time sovereign AI firewall & formal verification engine
+            </p>
           </div>
         </div>
 
         {/* Live Status Badge */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-void)] border border-[var(--glass-border)] text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[var(--neon-emerald)] animate-ping" />
-            <span className="text-[var(--neon-emerald)] font-bold">SHIELD ACTIVE</span>
-            <span className="text-[var(--text-muted)]">|</span>
-            <span className="text-[var(--text-secondary)]">&lt;{activeData.latencyMs}ms latency</span>
-          </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.4rem 0.85rem',
+            borderRadius: '20px',
+            background: 'var(--bg-void)',
+            border: '1px solid var(--glass-border)',
+            fontSize: '0.75rem',
+            fontFamily: 'JetBrains Mono, monospace',
+          }}
+        >
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: 'var(--neon-emerald)',
+              boxShadow: '0 0 10px var(--neon-emerald)',
+              display: 'inline-block',
+            }}
+          />
+          <span style={{ color: 'var(--neon-emerald)', fontWeight: 700 }}>SHIELD ACTIVE</span>
+          <span style={{ color: 'var(--text-muted)' }}>|</span>
+          <span style={{ color: 'var(--text-secondary)' }}>&lt;{activeData.latencyMs}ms latency</span>
         </div>
       </div>
 
-      {/* Attack Selection Pills */}
-      <div className="p-4 bg-[var(--bg-void)] border-b border-[var(--glass-border)] flex flex-wrap gap-2">
-        <span className="text-xs font-mono text-[var(--text-muted)] flex items-center mr-2">Preset Exploits:</span>
+      {/* ─── Preset Pills ─── */}
+      <div
+        style={{
+          padding: '0.85rem 1.75rem',
+          background: 'var(--bg-void)',
+          borderBottom: '1px solid var(--glass-border)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '0.5rem',
+        }}
+      >
+        <span style={{ fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace', color: 'var(--text-muted)', marginRight: '0.5rem' }}>
+          Preset Exploits:
+        </span>
         {PRESET_ATTACKS.map(attack => {
           const isSelected = selectedAttack.id === attack.id && !customPrompt;
           return (
             <button
               key={attack.id}
               onClick={() => handleSelectPreset(attack)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-2 border ${
-                isSelected
-                  ? 'bg-[var(--neon-cyan-dim)] border-[var(--neon-cyan-glow)] text-[var(--neon-cyan)] shadow-[0_0_12px_rgba(6,182,212,0.2)]'
-                  : 'bg-[var(--bg-card)] border-[var(--glass-border)] text-[var(--text-secondary)] hover:text-white hover:border-[var(--glass-border-hover)]'
-              }`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                padding: '0.4rem 0.75rem',
+                borderRadius: '8px',
+                fontSize: '0.75rem',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontWeight: isSelected ? 700 : 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                background: isSelected ? 'var(--neon-cyan-dim)' : 'var(--bg-card)',
+                border: `1px solid ${isSelected ? 'var(--neon-cyan)' : 'var(--glass-border)'}`,
+                color: isSelected ? 'var(--neon-cyan)' : 'var(--text-secondary)',
+                boxShadow: isSelected ? '0 0 12px rgba(0, 212, 255, 0.25)' : 'none',
+              }}
             >
-              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: attack.badgeColor }} />
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: attack.badgeColor }} />
               {attack.name}
             </button>
           );
         })}
       </div>
 
-      {/* Main Interactive Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[var(--glass-border)]">
-        
-        {/* Left Column: Input Attack Payload */}
-        <div className="p-6 space-y-4 flex flex-col justify-between">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-2">
-                <AlertTriangle size={14} className="text-[var(--neon-crimson)]" />
+      {/* ─── Main Two-Column Grid ─── */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gap: '1px',
+          background: 'var(--glass-border)',
+        }}
+      >
+        {/* Left Column: Attack Input */}
+        <div
+          style={{
+            padding: '1.75rem',
+            background: 'var(--bg-card)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1.25rem',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace', textTransform: 'uppercase', color: 'var(--neon-crimson)', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}>
+                <AlertTriangle size={14} />
                 Simulated Inbound Attack Payload
               </span>
               <button
                 onClick={handleCopy}
-                className="text-xs font-mono text-[var(--text-muted)] hover:text-white flex items-center gap-1 transition"
+                style={{
+                  fontSize: '0.7rem',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  color: 'var(--text-muted)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                }}
               >
-                {copied ? <Check size={12} className="text-[var(--neon-emerald)]" /> : <Copy size={12} />}
+                {copied ? <Check size={12} style={{ color: 'var(--neon-emerald)' }} /> : <Copy size={12} />}
                 {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
 
-            {/* Payload Textarea / Preview */}
-            <div className="relative">
+            <div style={{ position: 'relative' }}>
               <textarea
                 value={customPrompt || activeData.payload}
                 onChange={e => setCustomPrompt(e.target.value)}
-                placeholder="Or enter your custom LLM prompt attack here..."
+                placeholder="Or paste your custom prompt injection attack here..."
                 rows={5}
-                className="w-full bg-[var(--bg-void)] border border-[var(--glass-border)] rounded-xl p-4 font-mono text-xs leading-relaxed text-[var(--text-primary)] focus:outline-none focus:border-[var(--neon-cyan)] transition resize-none"
+                style={{
+                  width: '100%',
+                  background: 'var(--bg-void)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '10px',
+                  padding: '1rem',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: '0.75rem',
+                  lineHeight: 1.6,
+                  color: 'var(--text-primary)',
+                  resize: 'none',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                }}
               />
-              <div className="absolute bottom-3 right-3 text-[10px] font-mono text-[var(--text-muted)]">
+              <div style={{ position: 'absolute', bottom: '0.75rem', right: '0.75rem', fontSize: '0.65rem', fontFamily: 'JetBrains Mono, monospace', color: 'var(--text-muted)' }}>
                 Target: {activeData.targetModel}
               </div>
             </div>
           </div>
 
-          {/* Test Custom Trigger & Meta */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
-              <Cpu size={14} className="text-[var(--neon-cyan)]" />
-              <span>Inspection Overhead: <strong>{activeData.latencyMs}ms</strong></span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', paddingTop: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace', color: 'var(--text-secondary)' }}>
+              <Cpu size={14} style={{ color: 'var(--neon-cyan)' }} />
+              <span>Inspection Overhead: <strong style={{ color: 'var(--text-primary)' }}>{activeData.latencyMs}ms</strong></span>
             </div>
 
             <button
               onClick={handleTestCustom}
               disabled={isScanning}
-              className="w-full sm:w-auto px-5 py-2 rounded-lg bg-[var(--neon-cyan)] text-black font-bold font-mono text-xs hover:brightness-110 transition flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+              style={{
+                padding: '0.6rem 1.25rem',
+                borderRadius: '8px',
+                background: 'var(--neon-cyan)',
+                color: '#000',
+                fontWeight: 800,
+                fontSize: '0.75rem',
+                fontFamily: 'JetBrains Mono, monospace',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                boxShadow: '0 0 15px rgba(0, 212, 255, 0.35)',
+                transition: 'all 0.2s',
+              }}
             >
-              {isScanning ? (
-                <>
-                  <RefreshCw size={14} className="animate-spin" />
-                  Neutralizing...
-                </>
-              ) : (
-                <>
-                  <Zap size={14} />
-                  Run Real-Time Test
-                </>
-              )}
+              {isScanning ? <RefreshCw size={14} className="animate-spin" /> : <Zap size={14} />}
+              {isScanning ? 'Neutralizing...' : 'Run Real-Time Test'}
             </button>
           </div>
         </div>
 
-        {/* Right Column: Spryzen Real-Time Defense Telemetry */}
-        <div className="p-6 bg-[var(--bg-void)]/60 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-wider text-[var(--neon-emerald)] flex items-center gap-2">
+        {/* Right Column: Defense Telemetry */}
+        <div
+          style={{
+            padding: '1.75rem',
+            background: 'rgba(10, 10, 16, 0.85)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1.25rem',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace', textTransform: 'uppercase', color: 'var(--neon-emerald)', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}>
                 <CheckCircle2 size={14} />
                 Spryzen Autonomous Interception
               </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[var(--neon-crimson-dim)] text-[var(--neon-crimson)] border border-[var(--neon-crimson-glow)]">
+              <span style={{ fontSize: '0.65rem', fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', background: 'var(--neon-crimson-dim)', color: 'var(--neon-crimson)', border: '1px solid var(--neon-crimson-glow)' }}>
                 RISK SCORE: {(activeData.riskScore * 100).toFixed(0)}%
               </span>
             </div>
 
-            {/* Neutralized Output Window */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeData.id + (isScanning ? 'scan' : 'idle')}
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="bg-[var(--bg-void)] border border-[var(--glass-border)] rounded-xl p-4 font-mono text-xs space-y-3 shadow-inner"
+                style={{
+                  background: 'var(--bg-void)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '10px',
+                  padding: '1rem',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: '0.75rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                  boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5)',
+                }}
               >
-                <div className="text-[var(--neon-emerald)] font-bold leading-relaxed">
+                <div style={{ color: 'var(--neon-emerald)', fontWeight: 700, lineHeight: 1.6 }}>
                   {activeData.neutralizedOutput}
                 </div>
 
-                <div className="border-t border-[var(--glass-border)] pt-2 text-[11px] text-[var(--text-secondary)] space-y-1">
-                  <div className="flex items-center gap-1.5 text-[var(--neon-cyan)] font-medium">
+                <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '0.5rem', fontSize: '0.7rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--neon-cyan)', fontWeight: 600 }}>
                     <Sparkles size={12} />
                     {activeData.detectedBy}
                   </div>
-                  <p className="text-[var(--text-muted)]">{activeData.explanation}</p>
+                  <p style={{ color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>{activeData.explanation}</p>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            {/* Formal Verification Mathematical Proof Badge */}
-            <div className="p-3 rounded-lg bg-[var(--glass-surface)] border border-[var(--glass-border)] font-mono text-[11px] flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-[var(--text-secondary)] truncate">
-                <Lock size={13} className="text-[var(--neon-gold)] flex-shrink-0" />
-                <span className="truncate">{activeData.formalProof}</span>
+            {/* Formal Mathematical Proof */}
+            <div
+              style={{
+                padding: '0.65rem 0.85rem',
+                borderRadius: '8px',
+                background: 'var(--glass-surface)',
+                border: '1px solid var(--glass-border)',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: '0.7rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.5rem',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <Lock size={12} style={{ color: 'var(--neon-gold)', flexShrink: 0 }} />
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{activeData.formalProof}</span>
               </div>
-              <span className="text-[10px] uppercase font-bold text-[var(--neon-gold)] whitespace-nowrap">
+              <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--neon-gold)', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                 PROVEN SAT
               </span>
             </div>
           </div>
 
-          {/* Quickstart CTA */}
-          <div className="flex items-center justify-between pt-2 border-t border-[var(--glass-border)] text-xs font-mono">
-            <span className="text-[var(--text-muted)]">Zero data retained in cloud</span>
-            <a
+          {/* Bottom Link */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingTop: '0.5rem',
+              borderTop: '1px solid var(--glass-border)',
+              fontSize: '0.75rem',
+              fontFamily: 'JetBrains Mono, monospace',
+            }}
+          >
+            <span style={{ color: 'var(--text-muted)' }}>Zero data retained in cloud</span>
+            <Link
               href="/docs"
-              className="text-[var(--neon-cyan)] hover:underline flex items-center gap-1 font-bold"
+              style={{ color: 'var(--neon-cyan)', fontWeight: 700, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
             >
-              Integrate in 1-Line &rarr;
-            </a>
+              Integrate in 1-Line <ArrowRight size={12} />
+            </Link>
           </div>
         </div>
-
       </div>
     </div>
   );
